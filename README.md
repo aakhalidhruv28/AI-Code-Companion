@@ -9,7 +9,7 @@
 
 **A powerful, modern web application that leverages AI to help developers write, analyze, and improve their code.**
 
-[🚀 Live Demo](https://yourusername.github.io/ai-code-companion) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [API Setup](#-api-setup)
+[🚀 Live Demo](https://aakhalidhruv28.github.io/AI-Code-Companion/) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [API Setup](#-api-setup)
 
 ![AI Code Companion Preview](./Screenshot.png)
 
@@ -142,7 +142,7 @@ AI Code Companion is a sophisticated web-based IDE assistant that integrates AI 
 
 ### 🌐 Live Demo
 
-Try it now without installation: **[AI Code Companion Live Demo](https://yourusername.github.io/ai-code-companion)**
+Try it now without installation: **[AI Code Companion Live Demo](https://aakhalidhruv28.github.io/AI-Code-Companion/)**
 
 > Note: You'll need to add your own OpenRouter API key to use the AI features.
 > 
