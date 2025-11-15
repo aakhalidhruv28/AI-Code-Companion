@@ -1,5 +1,5 @@
 // OpenRouter API Configuration
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = 'Your API KEY';
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const MODEL = 'meta-llama/llama-4-maverick:free';
 
