@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Code Companion</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Highlight.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <!-- Mobile Warning -->
+    <div class="mobile-warning" id="mobileWarning">
+        <div class="mobile-warning-content">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <h2>Desktop Required</h2>
+            <p>For the best experience, please use a desktop, laptop, or tablet device.</p>
+            <p class="small">Mobile responsive version coming soon!</p>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-wrapper">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <div class="brand-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                        <path d="M2 17l10 5 10-5"></path>
+                        <path d="M2 12l10 5 10-5"></path>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>AI Code Companion</h1>
+                    <!-- <span>Accurate Results with Quick Responses</span> -->
+                </div>
+            </div>
+            <div class="nav-actions">
+                <button class="nav-btn" id="historyBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>History</span>
+                </button>
+                <button class="nav-btn" id="shortcutsBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>Shortcuts</span>
+                </button>
+                <button class="nav-btn" id="generateCodeBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12h14"></path>
+                    </svg>
+                    <span>Generate Code</span>
+                </button>
+                <button class="nav-btn primary" id="newSessionBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12h14"></path>
+                    </svg>
+                    <span>New</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Grid -->
+        <main class="main-grid">
+            <!-- Left Panel: Code Editor -->
+            <section class="panel editor-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                        <h2>Code Editor</h2>
+                    </div>
+                    <div class="panel-controls">
+                        <button class="icon-btn" id="clearBtn" title="Clear All">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 6h18"></path>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="editor-container">
+                    <div class="line-numbers" id="lineNumbers">1</div>
+                    <div class="code-editor-wrapper" id="codeEditorWrapper">
+                        <textarea 
+                            id="codeInput" 
+                            placeholder="// Paste your code here or start typing...&#10;&#10;// Quick Actions:&#10;// • Ctrl/Cmd + Enter → Explain Code&#10;// • Ctrl/Cmd + Shift + R → Code Review&#10;// • Ctrl/Cmd + Shift + O → Optimize&#10;&#10;function example() {&#10;    console.log('Start coding!');&#10;}"
+                            spellcheck="false"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="editor-footer">
+                    <div class="footer-actions">
+                        <button class="footer-btn" id="exportBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            Export
+                        </button>
+                    </div>
+                    <div class="footer-status">
+                        <span class="status-item">Lines: <strong id="lineCount">1</strong></span>
+                        <span class="status-divider">|</span>
+                        <span class="status-item">Chars: <strong id="charCount">0</strong></span>
+                        <span class="status-divider">|</span>
+                        <span class="status-item">Cursor: <strong id="cursorPosition">1:1</strong></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center Panel: AI Actions -->
+            <section class="panel actions-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                        <h2>AI Actions</h2>
+                    </div>
+                </div>
+                <div class="actions-grid">
+                    <button class="action-btn" data-action="explain" id="explainBtn">
+                        <div class="action-icon blue">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                        </div>
+                        <div class="action-text">
+                            <h3>Explain</h3>
+                            <p>Detailed explanation</p>
+                        </div>
+                    </button>
+
+                    <button class="action-btn" data-action="review" id="reviewBtn">
+                        <div class="action-icon purple">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"></path>
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                            </svg>
+                        </div>
+                        <div class="action-text">
+                            <h3>Review</h3>
+                            <p>Code feedback</p>
+                        </div>
+                    </button>
+
+                    <button class="action-btn" data-action="optimize" id="optimizeBtn">
+                        <div class="action-icon green">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="action-text">
+                            <h3>Optimize</h3>
+                            <p>Performance boost</p>
+                        </div>
+                    </button>
+
+                    <button class="action-btn" data-action="debug" id="debugBtn">
+                        <div class="action-icon red">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                                <path d="M12 9v4"></path>
+                                <path d="M12 17h.01"></path>
+                            </svg>
+                        </div>
+                        <div class="action-text">
+                            <h3>Debug</h3>
+                            <p>Find & fix bugs</p>
+                        </div>
+                    </button>
+
+                    <button class="action-btn" data-action="test" id="testBtn">
+                        <div class="action-icon orange">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <div class="action-text">
+                            <h3>Tests</h3>
+                            <p>Unit tests</p>
+                        </div>
+                    </button>
+
+                    <button class="action-btn" data-action="document" id="documentBtn">
+                        <div class="action-icon pink">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                        </div>
+                        <div class="action-text">
+                            <h3>Document</h3>
+                            <p>Generate docs</p>
+                        </div>
+                    </button>
+
+                    <button class="action-btn" data-action="convert" id="convertBtn">
+                        <div class="action-icon yellow">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="23 4 23 10 17 10"></polyline>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                            </svg>
+                        </div>
+                        <div class="action-text">
+                            <h3>Convert</h3>
+                            <p>Change language</p>
+                        </div>
+                    </button>
+
+                    <button class="action-btn" data-action="refactor" id="refactorBtn">
+                        <div class="action-icon teal">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="action-text">
+                            <h3>Refactor</h3>
+                            <p>Improve code</p>
+                        </div>
+                    </button>
+
+                    <button class="action-btn" data-action="security" id="securityBtn">
+                        <div class="action-icon indigo">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                        </div>
+                        <div class="action-text">
+                            <h3>Security</h3>
+                            <p>Find vulnerabilities</p>
+                        </div>
+                    </button>
+
+                    <button class="action-btn" data-action="format" id="formatBtn">
+                        <div class="action-icon violet">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                        </div>
+                        <div class="action-text">
+                            <h3>Format</h3>
+                            <p>Clean & beautify</p>
+                        </div>
+                    </button>
+
+                    <button class="action-btn" data-action="comments" id="commentsBtn">
+                        <div class="action-icon lime">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="action-text">
+                            <h3>Comments</h3>
+                            <p>Add explanations</p>
+                        </div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Right Panel: AI Response -->
+            <section class="panel response-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <h2>AI Response</h2>
+                    </div>
+                    <div class="panel-controls">
+                        <button class="icon-btn" id="copyAllBtn" title="Copy All">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <button class="icon-btn" id="clearOutputBtn" title="Clear Response">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="response-container" id="outputContent">
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <h3>Ready to Assist</h3>
+                        <p>Paste your code and select an AI action to get started</p>
+                        <div class="quick-tips">
+                            <span class="tip">💡 Use keyboard shortcuts for faster workflow</span>
+                            <span class="tip">🚀 AI provides advanced code analysis</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>AI is analyzing your code...</p>
+            <span class="loading-subtext">Wait for 15-20 Seconds For Results</span>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="generateModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Generate Code</h3>
+                <button class="modal-close" id="closeGenerateModal">×</button>
+            </div>
+            <div class="modal-body">
+                <label>Describe what you want to generate:</label>
+                <textarea id="generateInput" placeholder="Example: Create a function that sorts an array using quicksort algorithm with comments"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelGenerateBtn">Cancel</button>
+                <button class="btn-primary" id="generateSubmitBtn">Generate Code</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="convertModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Convert Code</h3>
+                <button class="modal-close" id="closeConvertModal">×</button>
+            </div>
+            <div class="modal-body">
+                <label>Convert to:</label>
+                <select id="targetLanguage">
+                    <option value="javascript">JavaScript</option>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                    <option value="cpp">C++</option>
+                    <option value="typescript">TypeScript</option>
+                    <option value="go">Go</option>
+                    <option value="rust">Rust</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelConvertBtn">Cancel</button>
+                <button class="btn-primary" id="convertSubmitBtn">Convert</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="historyModal">
+        <div class="modal-box large">
+            <div class="modal-header">
+                <h3>History</h3>
+                <button class="modal-close" id="closeHistoryBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="history-list" id="historyContent">
+                    <div class="empty-state-small">
+                        <p>No history yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="templatesModal">
+        <div class="modal-box large">
+            <div class="modal-header">
+                <h3>Code Templates</h3>
+                <button class="modal-close" id="closeTemplatesBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="template-search-container">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input 
+                        type="text" 
+                        id="templateSearch" 
+                        class="template-search" 
+                        placeholder="Search templates by name, language, or description..."
+                        autocomplete="off"
+                    />
+                    <button class="search-clear" id="clearSearch" style="display: none;">×</button>
+                </div>
+                <div class="templates-grid" id="templatesGrid">
+                    <!-- Templates will be dynamically inserted here -->
+                </div>
+                <div class="no-results" id="noResults" style="display: none;">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <p>No templates found</p>
+                    <span>Try a different search term or filter</span>
+                    <button class="generate-custom-btn" id="generateCustomFromTemplates" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12h14"></path>
+                        </svg>
+                        Generate Custom Code
+                    </button>
+                </div>
+                <div class="templates-footer">
+                    <button class="generate-custom-btn" id="generateCustomBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12h14"></path>
+                        </svg>
+                        Generate Custom Code with AI
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="exportModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Export Code</h3>
+                <button class="modal-close" id="closeExportModal">×</button>
+            </div>
+            <div class="modal-body">
+                <label>File Name:</label>
+                <input type="text" id="exportFileName" placeholder="my-code" class="export-input" />
+                <label style="margin-top: 1rem;">File Extension:</label>
+                <select id="exportFileExtension" class="export-select">
+                    <option value=".txt">.txt</option>
+                    <option value=".js">.js</option>
+                    <option value=".py">.py</option>
+                    <option value=".html">.html</option>
+                    <option value=".css">.css</option>
+                    <option value=".java">.java</option>
+                    <option value=".cpp">.cpp</option>
+                    <option value=".ts">.ts</option>
+                    <option value=".go">.go</option>
+                    <option value=".rs">.rs</option>
+                    <option value=".php">.php</option>
+                    <option value=".rb">.rb</option>
+                    <option value=".sql">.sql</option>
+                    <option value=".json">.json</option>
+                    <option value=".xml">.xml</option>
+                    <option value=".md">.md</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelExportBtn">Cancel</button>
+                <button class="btn-primary" id="exportSubmitBtn">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="shortcutsModal">
+        <div class="modal-box large">
+            <div class="modal-header">
+                <h3>⌨️ Keyboard Shortcuts</h3>
+                <button class="modal-close" id="closeShortcutsBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="shortcuts-grid">
+                    <div class="shortcut-section">
+                        <h4>AI Actions</h4>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Explain Code</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">Enter</span>
+                            </div>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Code Review</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">Shift</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">R</span>
+                            </div>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Optimize Code</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">Shift</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">O</span>
+                            </div>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Debug Code</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">Shift</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">D</span>
+                            </div>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Generate Tests</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">Shift</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">T</span>
+                            </div>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Generate Documentation</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">Shift</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">M</span>
+                            </div>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Add Comments</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">Shift</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">C</span>
+                            </div>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Refactor Code</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">Shift</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">F</span>
+                            </div>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Format Code</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">Shift</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">P</span>
+                            </div>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Security Audit</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">Shift</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">U</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shortcut-section">
+                        <h4>File Operations</h4>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Export Code</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">Shift</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">E</span>
+                            </div>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">New Session</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">Shift</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">N</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shortcut-section">
+                        <h4>Navigation</h4>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Open History</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">H</span>
+                            </div>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Open Templates</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Ctrl</span>
+                                <span class="key-separator">+</span>
+                                <span class="key">K</span>
+                            </div>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-label">Close Modal</span>
+                            <div class="shortcut-keys">
+                                <span class="key">Esc</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
