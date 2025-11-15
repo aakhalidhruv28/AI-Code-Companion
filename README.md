@@ -11,7 +11,7 @@
 
 [🚀 Live Demo](https://yourusername.github.io/ai-code-companion) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [API Setup](#-api-setup)
 
-![AI Code Companion Preview](./screenshots/preview.png)
+![AI Code Companion Preview](./Screenshot.png)
 
 </div>
 
@@ -88,42 +88,6 @@ AI Code Companion is a sophisticated web-based IDE assistant that integrates AI 
 
 ---
 
-## 📸 Screenshots
-
-> **Note**: Add your own screenshots by following the guide in [SCREENSHOTS_GUIDE.md](./SCREENSHOTS_GUIDE.md)
-
-### Main Interface
-<div align="center">
-  <img src="./screenshots/main-interface.png" alt="Main Interface" width="800"/>
-  <p><em>Clean, modern interface with code editor, AI actions, and response panel</em></p>
-</div>
-
-### Code Editor with Line Numbers
-<div align="center">
-  <img src="./screenshots/code-editor.png" alt="Code Editor" width="800"/>
-  <p><em>Professional code editor with syntax highlighting and line numbers</em></p>
-</div>
-
-### AI Response with Code Blocks
-<div align="center">
-  <img src="./screenshots/ai-response.png" alt="AI Response" width="800"/>
-  <p><em>Beautiful dark theme code blocks with syntax highlighting and copy buttons</em></p>
-</div>
-
-### Generate Code Modal
-<div align="center">
-  <img src="./screenshots/generate-modal.png" alt="Generate Code" width="600"/>
-  <p><em>Generate code from natural language descriptions</em></p>
-</div>
-
-### Export Functionality
-<div align="center">
-  <img src="./screenshots/export-modal.png" alt="Export Code" width="600"/>
-  <p><em>Export code with custom filename and extension</em></p>
-</div>
-
----
-
 ## 🛠️ Tech Stack
 
 ### Frontend
@@ -181,24 +145,7 @@ AI Code Companion is a sophisticated web-based IDE assistant that integrates AI 
 Try it now without installation: **[AI Code Companion Live Demo](https://yourusername.github.io/ai-code-companion)**
 
 > Note: You'll need to add your own OpenRouter API key to use the AI features.
-
-### Alternative: Use a Local Server
-
-For better development experience:
-
-```bash
-# Using Python
-python -m http.server 8000
-
-# Using Node.js (http-server)
-npx http-server
-
-# Using PHP
-php -S localhost:8000
-```
-
-Then open `http://localhost:8000` in your browser.
-
+> 
 ---
 
 ## 🔑 API Setup
@@ -317,7 +264,7 @@ Then open `http://localhost:8000` in your browser.
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure (Important Files!)
 
 ```
 ai-code-companion/
@@ -325,16 +272,6 @@ ai-code-companion/
 ├── script.js                  # JavaScript logic
 ├── style.css                  # Styling
 ├── README.md                  # This file
-├── LICENSE                    # MIT License
-├── AI_RESPONSE_REDESIGN.md    # Design documentation
-├── UPDATE_SUMMARY.md          # Update history
-└── screenshots/               # Screenshots for README
-    ├── preview.png            # Main preview image
-    ├── main-interface.png     # Full interface screenshot
-    ├── code-editor.png        # Code editor screenshot
-    ├── ai-response.png        # AI response screenshot
-    ├── generate-modal.png     # Generate code modal
-    └── export-modal.png       # Export modal screenshot
 ```
 
 ### Key Files
@@ -442,31 +379,6 @@ Contributions are welcome! Here's how you can help:
 
 ---
 
-## 🔮 Roadmap
-
-### Version 1.1
-- [ ] Mobile responsive design
-- [ ] Multiple theme options
-- [ ] More AI models support
-- [ ] Code diff viewer
-- [ ] Collaborative features
-
-### Version 1.2
-- [ ] Plugin system
-- [ ] Custom AI prompts
-- [ ] Code snippets library
-- [ ] Git integration
-- [ ] Cloud sync
-
-### Version 2.0
-- [ ] Desktop app (Electron)
-- [ ] VS Code extension
-- [ ] Team collaboration
-- [ ] Advanced analytics
-- [ ] Custom AI training
-
----
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -511,40 +423,13 @@ SOFTWARE.
 - Replit AI
 - CodePen
 
-### Special Thanks
-- All contributors and users
-- Open source community
-- AI/ML researchers and developers
-
----
-
-## 📞 Contact & Support
-
-### Get Help
-- 📧 Email: support@example.com
-- 💬 Discord: [Join our server](#)
-- 🐦 Twitter: [@aicodcompanion](#)
-- 📖 Documentation: [Wiki](#)
-
-### Report Issues
-- 🐛 Bug Reports: [GitHub Issues](https://github.com/yourusername/ai-code-companion/issues)
-- 💡 Feature Requests: [GitHub Discussions](https://github.com/yourusername/ai-code-companion/discussions)
-
----
-
-## 📊 Stats
-
-![GitHub stars](https://img.shields.io/github/stars/yourusername/ai-code-companion?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/ai-code-companion?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/yourusername/ai-code-companion?style=social)
-
 ---
 
 <div align="center">
 
 ### ⭐ Star this repo if you find it helpful!
 
-Made with ❤️ by developers, for developers
+Made with ❤️ by Dhruv Aakhali
 
 [Back to Top](#-ai-code-companion)
 
